@@ -1,0 +1,14 @@
+{{$data := .}}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <title>Hallow World!</title>
+	</head>
+	<body>
+	    {{range $index, $element := $data}}
+			<li> {{$index}} - {{$element}} </li>
+		{{end}}
+	</body>
+</html>

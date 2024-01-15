@@ -1,0 +1,20 @@
+{{$struct := .}}
+{{$id := $struct.ID}}
+{{$first := $struct.First}}
+{{$last := $struct.Last}}
+{{$age := $struct.Age}}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <title>Hallow World!</title>
+	</head>
+	<body>
+	   <ul>
+			<li> ID - {{$id}} </li>
+			<li> Full Name - {{$first}} {{$last}} </li>
+			<li> Age - {{$age}} </li>
+	   </ul>
+	</body>
+</html>
