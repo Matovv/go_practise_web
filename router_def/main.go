@@ -21,6 +21,19 @@ type Car struct {
 	Cost         string
 }
 
+// orderHotdogRedirect redirects user to actual order handler url in case this handler is called
+func orderHotdogRedirect(res http.ResponseWriter, req *http.Request)  {
+	/*
+	// redirection method 1
+	res.Header().Set("Location", "/order/hotdog")
+	res.WriteHeader(http.StatusSeeOther)
+	*/
+	
+	// redirection method 2
+	http.Redirect(res, req, "/order/hotdog", http.StatusSeeOther)
+}
+
+// orderHotdogHandler handles hotdog order
 func orderHotdogHandler(res http.ResponseWriter, req *http.Request) {
 	//fmt.Fprintf(w, "Hotdog '%s' for customer '%s' is served. Transaction amount is '%s'. Thank you!", m.Type, m.CustomerName, m.Cost)
 	err := req.ParseForm()
@@ -41,6 +54,7 @@ func orderHotdogHandler(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// orderCarHandler handles car order
 func orderCarHandler(res http.ResponseWriter, req *http.Request) {
 
 	err := req.ParseForm()
@@ -78,6 +92,7 @@ func main() {
 	fmt.Println("Listening on port", port)
 
 	http.Handle("/favicon.ico", http.NotFoundHandler()) // browser always ask for favicon.ico, which is the icon of the tab
+	http.HandleFunc("/hotdog", orderHotdogRedirect)
 	http.HandleFunc("/order/hotdog", orderHotdogHandler)
 	http.HandleFunc("/order/car", orderCarHandler)
 
