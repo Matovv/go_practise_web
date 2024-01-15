@@ -25,7 +25,8 @@ func orderHotdogHandler(res http.ResponseWriter, req *http.Request) {
 	//fmt.Fprintf(w, "Hotdog '%s' for customer '%s' is served. Transaction amount is '%s'. Thank you!", m.Type, m.CustomerName, m.Cost)
 	err := req.ParseForm()
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(res, "Parse failed.", 404)
+		return
 	}
 	customerName := req.Form.Get("fname")
 	var data Hotdog
@@ -35,7 +36,8 @@ func orderHotdogHandler(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Order-Key", "000223")
 	err = tpl.ExecuteTemplate(res,"post_test.gohtml", data)
 	if err != nil {
-		log.Println(err)
+		http.Error(res, "Template not found.", 404)
+		return
 	}
 }
 
@@ -43,7 +45,8 @@ func orderCarHandler(res http.ResponseWriter, req *http.Request) {
 	
 	err := req.ParseForm()
 	if err != nil {
-		log.Fatalln(err)
+		http.Error(res, "Parse failed.", 404)
+		return
 	}
 	customerName := req.Form.Get("fname")
 
@@ -56,7 +59,8 @@ func orderCarHandler(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Order-Key", "000155")
 	err = tpl.ExecuteTemplate(res,"post_test2.gohtml", data)
 	if err != nil {
-		log.Println(err)
+		http.Error(res, "Template not found.", 404)
+		return
 	}
 
 	log.Println("Car Served! Customer -",customerName)
@@ -72,6 +76,7 @@ const port int = 8080
 func main() {
 	fmt.Println("Listening on port",port)
 
+	http.Handle("/favicon.ico", http.NotFoundHandler())  // browser always ask for favicon.ico, which is the icon of the tab
 	http.HandleFunc("/order/hotdog", orderHotdogHandler)
 	http.HandleFunc("/order/car", orderCarHandler)
 
