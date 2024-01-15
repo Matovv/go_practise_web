@@ -6,44 +6,60 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 )
+
 var tpl *template.Template
 
 // User type is for testing templates with custom type data
 type User struct {
-	ID string
+	ID    string
 	First string
-	Last string
-	Age int
+	Last  string
+	Age   int
 }
 
+var fm = template.FuncMap{
+	"toUpper":    strings.ToUpper,
+	"formatTime": FormatTime,
+}
 
 // Initialize templates
 func init() {
-	tpl = template.Must(template.ParseGlob("go_templates/templates/*.gohtml"))
+	tpl = template.Must(template.New("").Funcs(fm).ParseGlob("go_templates/templates/*.gohtml"))
 	log.Println("Init completed!")
 }
 func main() {
 	//ExecuteTemplate("tpl_with_data", "JOSTAAAR")
 	//ExecuteTemplate("tpl_complex", []int{1,5,25,100,500})
 	/*
-	m := map[string]string {
-		"23242": "Alfred",
-		"00032": "Jhon",
-		"09981": "Tiger",
-	}
-	ExecuteTemplate("tpl_complex", m)
+		m := map[string]string {
+			"23242": "Alfred",
+			"00032": "Jhon",
+			"09981": "Tiger",
+		}
+		ExecuteTemplate("tpl_complex", m)
 	*/
-	u1 := User{"00039","Jhon","Wicked",32}
-	u2 := User{"00031","Lily","Deepthroat",19}
-	u3 := User{"00107","Phantom","Lancer",26}
-	//ExecuteTemplate("tpl_structs", u1)
-	ExecuteTemplate("tpl_complexStructs", []User{u1,u2,u3})
+	/*
+		u1 := User{"00039","Jhon","Wicked",32}
+		u2 := User{"00031","Lily","Deepthroat",19}
+		u3 := User{"00107","Phantom","Lancer",26}
+		//ExecuteTemplate("tpl_structs", u1)
+		ExecuteTemplate("tpl_complexStructs", []User{u1,u2,u3})
+	*/
+	ExecuteTemplate("tpl_time", time.Now())
+
+}
+
+// FormatTime formats received time to be more readable
+func FormatTime(t time.Time) string {
+	return t.Format("02-01-2006")
+	//return fmt.Sprintf("%v-th of %v, %v", t.Day(),t.Month(),t.Year())
 }
 
 // ExecuteTemplate executes given template name and passes given data, while handling all error that may occur.
 func ExecuteTemplate(tplName string, data any) {
-	err := tpl.ExecuteTemplate(os.Stdout, tplName + ".gohtml", data)
+	err := tpl.ExecuteTemplate(os.Stdout, tplName+".gohtml", data)
 	if err != nil {
 		log.Fatalln(err)
 	}

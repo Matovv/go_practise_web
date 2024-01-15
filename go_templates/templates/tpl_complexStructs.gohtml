@@ -10,7 +10,7 @@
 	    {{range $index, $element := $data}}
 			<ul>
 				<li> ID - {{$element.ID}} </li>
-				<li> Full Name - {{$element.First}} {{$element.Last}} </li>
+				<li> Full Name - {{$element.First}} {{toUpper $element.Last}} </li>
 				<li> Age - {{$element.Age}} </li>
 	   		</ul>
 		{{end}}
