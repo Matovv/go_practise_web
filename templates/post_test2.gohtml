@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Hallow World!</title>
+	</head>
+	<body>
+	   {{if ne .CustomerName "" }}
+		<main>
+			<h3>Request Result:</h1>
+			<p>{{.Color}} colored '{{.Brand}} {{.Model}}' for customer '{{.CustomerName}}' is served. Transaction amount is '{{.Cost}}'. Thank you!</p>
+		</main>	
+       {{end}}
+       <form action="/order/car" method="POST">
+            <input type="text" name="fname" placeholder="first name" autofocus autocomplete="off">
+            <input type="submit" name="submit-btn" value="Submit">
+	   </form>
+	</body>
+</html> 
+	
