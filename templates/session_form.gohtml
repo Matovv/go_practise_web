@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Hallow World!</title>
+	</head>
+	<body>
+		<form action="/" method="POST">
+            <input type="email" name="username" placeholder="email" autofocus autocomplete="off">
+            <input type="password" name="password" placeholder="password" autofocus autocomplete="off">
+            <input type="text" name="firstname" placeholder="first name" autofocus autocomplete="off">
+            <input type="text" name="lastname" placeholder="last name" autofocus autocomplete="off">
+            <input type="submit" name="submit-btn" value="Submit">
+	    </form>
+
+	    {{if ne .UserName "" }}
+		<main>
+			<h3>Welcome, {{.First}} {{.Last}}!</h3>
+			<p>We have been waiting for you for so long!</p>
+		</main>	
+        {{end}}
+	</body>
+</html> 
+	

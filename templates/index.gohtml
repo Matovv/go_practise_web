@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Hallow World!</title>
+	</head>
+	<body>
+		<h2>Halvazone Enterprise</h2>
+        <h4>Work hard or die hard!<h4>
+        <ul>
+			{{if not .}}
+            <li><a href="/signup">SIGN UP!</a></li>
+            <li><a href="/login">LOG IN!</a></li>
+			{{else}}
+			<li><h6>Welcome,{{.First}} {{.Last}}!</h6></li>
+            <li><a href="/profile">Go to user profile</a></li>
+            <li><a href="/logout">Log out!</a></li>
+			{{end}}
+        </ul>
+	</body>
+</html> 
