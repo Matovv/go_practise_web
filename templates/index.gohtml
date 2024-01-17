@@ -12,8 +12,11 @@
             <li><a href="/signup">SIGN UP!</a></li>
             <li><a href="/login">LOG IN!</a></li>
 			{{else}}
-			<li><h6>Welcome,{{.First}} {{.Last}}!</h6></li>
-            <li><a href="/profile">Go to user profile</a></li>
+			<li><h6>Welcome, {{.First}} {{.Last}}!</h6></li>
+			{{if eq .AccessLevel "ADMIN"}}
+            <li><a href="/admin">Go to admin panel.</a></li>
+			{{end}}
+            <li><a href="/profile">Go to user profile.</a></li>
             <li><a href="/logout">Log out!</a></li>
 			{{end}}
         </ul>

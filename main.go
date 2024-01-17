@@ -13,7 +13,7 @@ import (
 
 const (
 	session           = "session"
-	sessionLength	  = 10  // seconds
+	sessionLength	  = 600  // seconds
 	accessLevel_admin = "ADMIN"
 	accessLevel_user  = "USER"
 )
@@ -47,18 +47,22 @@ var tpl *template.Template
 var dbUsers = map[string]User{}
 var dbSessions = map[string]Session{}
 
-func init() {
-	tpl = template.Must(tpl.ParseGlob("templates/*.gohtml"))
-
-	mockPass, err := bcrypt.GenerateFromPassword([]byte("qwerty"), bcrypt.MinCost)
+func createMockUser(email string, pass string, fname string, lname string, accessLevel string) {
+	mockPass, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.MinCost)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	mockUser := User{"test@x.com", mockPass, "Test", "Testov", accessLevel_admin}
+	mockUser := User{email, mockPass, "System", "Admin", accessLevel}
 	dbUsers[mockUser.UserName] = mockUser
 }
 
-const port int = 8080
+func init() {
+	tpl = template.Must(tpl.ParseGlob("templates/*.gohtml"))
+	createMockUser("admin@x.com", "qwerty", "Sys", "Admin", accessLevel_admin)
+	
+}
+
+const port int = 80
 
 func main() {
 	fmt.Println("Listening on port", port)
@@ -197,7 +201,6 @@ func loginHandler(res http.ResponseWriter, req *http.Request) {
 		cookie := &http.Cookie{
 			Name:  session,
 			Value: sID.String(),
-			MaxAge: sessionLength,
 		}
 		cookie.MaxAge = sessionLength
 		http.SetCookie(res, cookie)
