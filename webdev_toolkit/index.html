@@ -1,0 +1,29 @@
+!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Hallow World!</title>
+	</head>
+	<body>
+		<h2>Halvazone Enterprise</h2>
+        <h4>Make a request<h4>
+            <script>
+                document.querySelector('h4').onclick = makeRequest;
+
+                function makeRequest() {
+                    // create a XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // open request. true stands for async
+                    xhr.open('GET','/ajax', true); 
+                    //handles the response
+                    xhr.onreadystatechange = function () {
+                        if(xhr.readState === XMLHttpRequest.Done && xhr.status === 200){
+                            console.log(xhr.responseText)
+                        }
+                    };
+                    // send the request
+                    xhr.send();
+                }
+            </script>
+	</body>
+</html> 
