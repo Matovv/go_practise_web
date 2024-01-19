@@ -1,0 +1,29 @@
+# a hello world example with go
+# for this image to build successfuly, you must put it outside practise_web folder
+# and run go mod init and go mod tidy in it
+
+# dont forget to specify platform when building image
+# docker build --platform linux/amd64 -t myProject .
+
+# Use an official Golang runtime as a base image
+FROM golang:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the local code to the container
+COPY . .
+
+# Download and install any required dependencies
+# you can only use it when you have go.mod in image directory
+# RUN go get -d -v ./...
+
+# Install your Go application
+RUN GOOS=linux GOARCH=amd64 go install -v ./...
+# RUN go build -o mygo
+
+# Set the entry point for the container
+CMD test3
+
+LABEL maintainer="elnur.shamiyev@gmail.com"
+# LABEL author="elnur.shamiyev@gmail.com"
